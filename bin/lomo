@@ -1,0 +1,25 @@
+#!/usr/bin/env ruby
+
+unless file_name = ARGV.first
+  puts <<-eos
+    Usage:
+      lomo path_to_image.jpg
+
+    It will generate a 1024x768 version of the image with
+    the lomo filter applied. ImageMagick is required for this
+    to work.
+  eos
+  exit 1
+end
+
+file = File.expand_path(file_name)
+
+unless File.exists?(file)
+  puts "The file #{file_name} doesn't exist"
+  exit
+end
+
+require 'rubygems'
+require 'lomo'
+
+Lomo.new(file).process
