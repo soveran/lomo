@@ -12,6 +12,11 @@ class Lomo
       usage
       exit
     end
+
+    unless `convert --version`.match /ImageMagick/
+      requirements
+      exit
+    end
   end
 
   def usage
@@ -25,6 +30,15 @@ class Lomo
     eos
   end
 
+  def requirements
+    puts <<-eos
+      Requirements:
+
+      This filter makes use of ImageMagick. It runs convert and composite with
+      different parameters, so it won't work unless those commands are available.
+    eos
+  end
+
   def process
     `cp #{file} #{dest}`
     `convert -resize 1024x768 #{dest} #{dest}`
@@ -35,6 +49,6 @@ class Lomo
     `composite -compose overlay #{mask} #{dest} #{dest}`
     `composite -compose multiply #{dest}-resized #{dest} #{dest}`
     `rm #{dest}-resized`
-    `open #{dest}`
+    `open #{dest}` if RUBY_PLATFORM.match /darwin/
   end
 end
