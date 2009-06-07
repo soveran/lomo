@@ -6,7 +6,7 @@ Lomify your pictures with ImageMagick from the command line.
 
 ## Installation
 
-    sudo gem install soveran-lomo
+    sudo gem install lomo
 
 ## Usage
 
